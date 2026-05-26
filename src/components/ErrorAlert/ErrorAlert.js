@@ -1,10 +1,23 @@
-function ErrorAlert() {
+import './ErrorAlert.css';
+
+function ErrorAlert({ error, searchedText }) {
   return (
-   <>
-    ErrorAlert
-     <br />
-   </>
-    );
+    <div className="error-container">
+      <div className="error-content">
+        <svg className="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        <h3 className="error-message">
+          {error === "Movie not found!" 
+            ? `We couldn't find any movies matching "${searchedText}"` 
+            : "Oops! Something went wrong."}
+        </h3>
+        <p className="error-hint">Please check the spelling or try a different title.</p>
+      </div>
+    </div>
+  );
 }
 
 export default ErrorAlert;

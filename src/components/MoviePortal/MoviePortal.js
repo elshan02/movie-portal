@@ -41,11 +41,7 @@ function MoviePortal() {
 
       {error && <ErrorAlert error={error} searchedText={searchedText} />}
 
-      {movies.length > 0 && (
-        <p className="results-label">
-          Found {movies.length} movies for "<span>{searchedText}</span>"
-        </p>
-      )}
+      
 
       <div className="movies-grid">
         {movies.map((movie) => (

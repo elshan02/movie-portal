@@ -1,6 +1,8 @@
-export const fetchMovies = async (searchedText, moviesCallBack, errorCallBack) => {
+const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
+
+export const fetchMovies = async (searchedText, moviesCallBack, errorCallBack, onSuccess) => {
     try {
-        const response = await fetch(`http://www.omdbapi.com/?s=${searchedText}&apikey=4f813609`);
+        const response = await fetch(`http://www.omdbapi.com/?s=${searchedText}&apikey=${API_KEY}`);
         const data = await response.json();
        
         if (data.Response === "True") {
@@ -8,9 +10,12 @@ export const fetchMovies = async (searchedText, moviesCallBack, errorCallBack) =
             const movieDetails = await Promise.all(movieDetailsPromises);
             moviesCallBack(movieDetails);
             errorCallBack(null);
+
+            if (onSuccess) onSuccess();
         } else {
             moviesCallBack([]);
             errorCallBack(data.Error);
+            if (onSuccess) onSuccess();
         }
     } catch (error) {
         moviesCallBack([]);
@@ -21,7 +26,7 @@ export const fetchMovies = async (searchedText, moviesCallBack, errorCallBack) =
 
 const fetchMovieDetails = async (imdbID, errorCallBack) => {
     try {
-        const response = await fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=4f813609`);
+        const response = await fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${API_KEY}`);
         const data = await response.json();
 
         if (data.Response === "True") {
