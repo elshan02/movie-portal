@@ -2,7 +2,7 @@ const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
 export const fetchMovies = async (searchedText, moviesCallBack, errorCallBack, onSuccess) => {
     try {
-        const response = await fetch(`http://www.omdbapi.com/?s=${searchedText}&apikey=${API_KEY}`);
+        const response = await fetch(`https://www.omdbapi.com/?s=${searchedText}&apikey=${API_KEY}`);
         const data = await response.json();
        
         if (data.Response === "True") {

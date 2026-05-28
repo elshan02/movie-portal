@@ -4,7 +4,7 @@ import { fetchMovies } from "../../api/fetchMovies";
 import ErrorAlert from "../ErrorAlert/ErrorAlert";
 import MovieDetail from "../MovieDetail/MovieDetail";
 
-function MoviePortal() {
+function MoviePortal({ watchlist, toggleWatchlist }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchedText, setSearchedText] = useState("");
   const [movies, setMovies] = useState([]);
@@ -45,7 +45,11 @@ function MoviePortal() {
 
       <div className="movies-grid">
         {movies.map((movie) => (
-          <MovieDetail key={movie.imdbID} movie={movie} />
+          <MovieDetail 
+            key={movie.imdbID} 
+            movie={movie} 
+            watchlist={watchlist} 
+            toggleWatchlist={toggleWatchlist} />
         ))}
       </div>
     </div>

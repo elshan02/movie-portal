@@ -64,6 +64,32 @@
     margin-bottom: 16px;
 }
 
+.watchlist-btn {
+  background: transparent;
+  border: 1px solid #d4a43c;
+  margin-bottom: 7px;
+  color: #d4a43c;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.watchlist-btn:hover {
+  background: rgba(212, 164, 60, 0.1);
+}
+
+.watchlist-btn.saved {
+  background: #d4a43c;
+  color: #1a1a1a;
+}
+
+.watchlist-btn.saved:hover {
+  background: #bfa032;
+}
+
 .movie-links {
     display: flex;
     gap: 12px;
