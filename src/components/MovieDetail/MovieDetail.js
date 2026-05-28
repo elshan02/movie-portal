@@ -1,3 +1,4 @@
+import React from 'react';
 import './MovieDetail.css';
 
 function MovieDetail({ movie, watchlist, toggleWatchlist }) {
@@ -8,8 +9,12 @@ function MovieDetail({ movie, watchlist, toggleWatchlist }) {
     <div className="movie-card">
       <div className="movie-poster">
         <img
-          src={movie.Poster !== 'N/A' ? movie.Poster : '/noposter.png'}
+          src={movie.Poster !== 'N/A' ? movie.Poster : `${process.env.PUBLIC_URL}/noposter.png`}
           alt={movie.Title}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = `${process.env.PUBLIC_URL}/noposter.png`;
+          }}
         />
       </div>
       <div className="movie-info">
