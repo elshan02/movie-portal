@@ -1,20 +1,33 @@
-const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
 export const fetchMovies = async (searchedText, moviesCallBack, errorCallBack, onSuccess) => {
     try {
-        const response = await fetch(`https://www.omdbapi.com/?s=${searchedText}&apikey=${API_KEY}`);
+        const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(searchedText)}`);
+
         const data = await response.json();
-       
-        if (data.Response === "True") {
-            const movieDetailsPromises = data.Search.map((movie) => fetchMovieDetails(movie.imdbID, errorCallBack));
-            const movieDetails = await Promise.all(movieDetailsPromises);
-            moviesCallBack(movieDetails);
+
+        if (data.results && data.results.length > 0) {
+            const processedMovies = data.results.map((movie) => {
+                return {
+                    id: movie.id,
+                    title: movie.title,
+                    Poster: movie.poster_path
+                        ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
+                        : null,
+
+                    Plot: movie.overview || 'No plot available.',
+                    GenreIds: movie.genre_ids || [],
+                    Released: movie.release_date || 'Unknown',
+                }
+            })
+
+            moviesCallBack(processedMovies);
             errorCallBack(null);
 
             if (onSuccess) onSuccess();
         } else {
             moviesCallBack([]);
-            errorCallBack(data.Error);
+            errorCallBack("No movies found for the search term: " + searchedText);
             if (onSuccess) onSuccess();
         }
     } catch (error) {
@@ -24,19 +37,3 @@ export const fetchMovies = async (searchedText, moviesCallBack, errorCallBack, o
 };
 
 
-const fetchMovieDetails = async (imdbID, errorCallBack) => {
-    try {
-        const response = await fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${API_KEY}`);
-        const data = await response.json();
-
-        if (data.Response === "True") {
-            return data;
-        } else {
-            errorCallBack(data.Error);
-            return null;
-        }
-    } catch (error) {
-        errorCallBack("An error occurred while fetching movie details." + error.message);
-        return null;
-    }
-};
