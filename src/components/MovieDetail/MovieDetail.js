@@ -24,7 +24,7 @@ function MovieDetail({ movie, watchlist, toggleWatchlist }) {
         <button onClick={() => toggleWatchlist(movie)} className="watchlist-btn"> {isSaved ? 'Remove from Watchlist' : 'Add to Watchlist'} 
         </button>
         <div className="movie-links">
-          <a href={`https://www.imdb.com/title/${movie.imdbID}/`} target="_blank" rel="noreferrer" className="movie-link">IMDb</a>
+          <a href={`https://www.themoviedb.org/movie/${movie.imdbID}`} target="_blank" rel="noreferrer" className="movie-link">TMDB</a>
           <a href={`https://www.youtube.com/results?search_query=${movie.Title} trailer`} target="_blank" rel="noreferrer" className="movie-link">Trailer</a>
         </div>
       </div>

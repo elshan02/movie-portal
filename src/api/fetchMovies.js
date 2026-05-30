@@ -9,8 +9,8 @@ export const fetchMovies = async (searchedText, moviesCallBack, errorCallBack, o
         if (data.results && data.results.length > 0) {
             const processedMovies = data.results.map((movie) => {
                 return {
-                    id: movie.id,
-                    title: movie.title,
+                    imdbID: movie.id,
+                    Title: movie.title,
                     Poster: movie.poster_path
                         ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
                         : null,
